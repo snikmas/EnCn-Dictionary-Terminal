@@ -4,7 +4,7 @@ LIBS = -lcurl -luuid -lcrypto
 myFiles = main.c handleErrors.c makeRequest.c
 
 main: $(myFiles)
-    $(CC) $(CFLAGS) $(myFiles) -o main $(LIBS)
+	$(CC) $(CFLAGS) $(myFiles) -o main $(LIBS)
 
 clean:
-    rm -f main
+	rm -f main
