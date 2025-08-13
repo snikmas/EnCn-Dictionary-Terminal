@@ -5,6 +5,7 @@
 #include <uuid/uuid.h>
 #include <curl/curl.h>
 #include <openssl/evp.h>
+#include <openssl/sha.h>
 
 #include "apikeys.h"
 // get word
@@ -26,7 +27,8 @@ struct data {
 char *buildTime(){
     time_t curTime = time(0);
     char *curTime_str = malloc(20);
-    if(!curTime_str) return 5;
+    // IS NOT GOOD CHECKING
+    // if(!curTime_str) return curTime_str;
     snprintf(curTime_str, 20, "%lld", (long long)curTime);
     return curTime_str;
 }
@@ -39,17 +41,17 @@ size_t write_data(void *buffer, size_t size, size_t nmemb, void *userInput){
     struct data *tempData = (struct data *)userInput;
 
     // reallocs our currently struct for the response
-    char *ptr = realloc(tempData->response, temp->size + realSize + 1);
+    char *ptr = realloc(tempData->response, tempData->size + realSize + 1);
     if(!ptr) return 5; //out of memory
 
     // new reallocated block
-    temp->response = ptr;
+    tempData->response = ptr;
 
     // a new data to our buffer
-    memcpy(&(temp->response[temp->size]), buffer, realSize);
+    memcpy(&(tempData->response[tempData->size]), buffer, realSize);
     // recalculate the size
-    temp->size += realSize;
-    temp->response[temp->size] = 0;
+    tempData->size += realSize;
+    tempData->response[tempData->size] = 0;
 
     return realSize;
 };
@@ -59,16 +61,17 @@ char *buildUuid(){
    uuid_generate(binuuid);
 
    char *uuid_str = malloc(37);
-   if(!uuid_str) return 5;
+//    if(!uuid_str) return 5; IS NOT GOOD
    
    uuid_unparse(binuuid, uuid_str);
 
    return uuid_str;
 }
 
-char *buildSha256(*userInput, *salt, *curTime){
+char *buildSha256(char *userInput, char *salt, char *curTime){
 
-    snprintf(&sign, signof(sign), "%s%s%s%s%s", API_ID, userInput, salt, curTime, API_SECRET);
+    char *sign = malloc(512);
+    snprintf(sign, 512, "%s%s%s%s%s", API_ID, userInput, salt, curTime, API_SECRET);
 
     unsigned char hash[SHA256_DIGEST_LENGTH];
     unsigned int hash_len;
@@ -77,41 +80,42 @@ char *buildSha256(*userInput, *salt, *curTime){
     EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
     if(mdctx == NULL){
         perror("EVP_MD_CTX_new");
-        return 6;
+        // return 6;
     }
 
     // 2. initialize the digest context for sha-256;
-    if(EVP_DigestInit_ex(mdctx, EVP_sHA256(), NULL) != 1){
-        perrror("EVP_DigestInit_ex");
-        return 1;
+    if(EVP_DigestInit_ex(mdctx, EVP_sha256(), NULL) != 1){
+        perror("EVP_DigestInit_ex");
+        // return 1;
     }
     
     // 3. hash the input
-    if(EVP_DigestUpdate(mdctx, userInput, strlen(userInput)) != 1){
+    if(EVP_DigestUpdate(mdctx, sign, strlen(sign)) != 1){
         perror("EVP_DigestUpdate");
-        return 6;
+        // return 6;
     }
 
     // 4. finalize the hash
     if(EVP_DigestFinal_ex(mdctx, hash, &hash_len) != 1){
         perror("EVP_DigestFinal_ex");
-        return 7;
+        // return 7;
     }
 
     // 5. free the context;
     EVP_MD_CTX_free(mdctx);
 
     // 6. convert to hex string
-    char sign[hash_len * 2 + 1];
+    char *sign_hash = malloc(hash_len * 2 + 1);
+
     for(unsigned int i = 0; i < hash_len; i++){
-        sprintf(sign + (i * 2), "%02x", hash[i]);
+        sprintf(sign_hash + (i * 2), "%02x", hash[i]);
     }
 
-    sign[hash_len * 2] = '\0';
+    sign_hash[hash_len * 2] = '\0';
 
-    printf("this is sha256: %s\n", sign);
+    printf("this is sha256: %s\n", sign_hash);
 
-    return sign;
+    return sign_hash;
 }
 
 
@@ -128,12 +132,40 @@ int createUrl(char *url, char *userInput, char *option){
     char *curTime = buildTime();;
     char *sign = buildSha256(userInput, salt, curTime);
 
-    snprintf(url, lengthTotal, 
-        "%s?q=%s&langType=auto&appKey=%s&dicts=%s&salt=%s&sign=%s&signType=v3&curtime%s&docType=json", 
-        startUrl, userInput, API_KEY, option, salt, sign, curTime);
 
-    printf("full url string: %s\n");
+    // ========================================
+    // ========================================
+    CURL *curl = curl_easy_init(); // temporary curl handle just for escaping
 
+    if(!curl){
+        printf("no no no");
+        return 5;
+    }
+    char *encodedInput = curl_easy_escape(curl, userInput, 0);
+    char *encodedSign  = curl_easy_escape(curl, sign, 0);
+    curl_easy_cleanup(curl);
+
+    printf("start Url: %s\n", startUrl);
+    printf("ECNOEDuserInp: %s\n", encodedInput);
+    printf("key: %s\n", API_KEY);
+    printf("option: %s\n", option);
+    printf("salt: %s\n", salt);
+    printf("ENCOEDEDsign: %s\n", encodedSign);
+    printf("curtime: %s\n", curTime);
+    
+    snprintf(url, 512, 
+        "%s?q=%s&langType=auto&appKey=%s&dicts=%s&salt=%s&sign=%s&signType=v3&curtime=%s&docType=json", 
+        startUrl, encodedInput, API_KEY, option, salt, encodedSign, curTime);
+
+    printf("full url string: %s\n", url);
+
+
+    // cleanup
+    free(salt);
+    free(curTime);
+    free(sign);
+    curl_free(encodedInput);
+    curl_free(encodedSign);
 
     return 0;
 }
@@ -151,9 +183,11 @@ int makeRequest(char *option){
 
     
     printf("Input your word:\n>> ");
-    if((scanf("%99s", userInput)) != 1){
-        return 5;
-    };
+    fgets(userInput, 99, stdin);
+    // remove trailing newline if any
+    size_t len = strlen(userInput);
+    if(len > 0 && userInput[len-1] == '\n') userInput[len-1] = '\0';
+    
     
 
     struct data myData = {0};
@@ -168,15 +202,17 @@ int makeRequest(char *option){
         //3. write link
         createUrl(url, userInput, option);
         
-        curl_easy_setopt(curl, CURLOPT_URL, "link");
+        curl_easy_setopt(curl, CURLOPT_URL, url);
         // send data to this function
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
         // pass our chunk struct ti o here
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &myData); // get data
         
         res = curl_easy_perform(curl);
-        
-        free(data.response);
+        if(res != CURLE_OK) return 6;
+
+        printf("\nAPI RSPONSE:\n%s\n", myData.response);
+        free(myData.response);
         curl_easy_cleanup(curl);
         curl_global_cleanup();;
 
@@ -185,5 +221,6 @@ int makeRequest(char *option){
     }
         
 
+    return 0;
 
 }

@@ -21,8 +21,8 @@ int main(void){
   int input = -1;
 
   // can do timestemp and good evn good morn
-  while(input != 0){
-    printf("Nice to see you! This is Enlgish-Chinese Dictionary.\nMenu:");
+  while(1){
+    printf("\nNice to see you! This is Enlgish-Chinese Dictionary.\n\nMenu:\n");
     printf("1 - Translate English-Chinese\n");
     printf("2 - Translate Chinese-English\n");
     printf("3 - View Favorites\n");
@@ -30,7 +30,10 @@ int main(void){
     printf("5 - Help\n");
     printf("0 - Exit The Program\n");
 
-    scanf("%i", &input);
+    char line[10];
+    fgets(line, sizeof(line), stdin);
+    sscanf(line, "%d", &input);
+
 
     switch(input){
       case 1: makeRequest("ec"); break;
@@ -38,7 +41,7 @@ int main(void){
       case 3: viewFavorites(); break;
       case 4: viewHistory(); break;
       case 5: help(); break;
-      case 0: exitTheProgram(); break;
+      case 0: exitTheProgram(); return 0;
     }
   };
 
