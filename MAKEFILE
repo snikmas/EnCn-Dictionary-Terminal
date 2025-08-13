@@ -1,0 +1,10 @@
+CC = gcc
+CFLAGS = -Wall -g
+LIBS = -lcurl -luuid -lcrypto
+myFiles = main.c handleErrors.c makeRequest.c
+
+main: $(myFiles)
+    $(CC) $(CFLAGS) $(myFiles) -o main $(LIBS)
+
+clean:
+    rm -f main

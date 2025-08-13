@@ -5,12 +5,11 @@
 #include <stdlib.h>
 
 int makeRequest(char *option);
-int viewFavorites();
-int viewStory();
-int manageCollections();
-int help();
-int exitTheProgram();
-int handleErrors(int errorNumber);
+int viewFavorites() 
+int viewHistory() 
+int help()
+int exitTheProgram()
+int handleErrors(int errorNumber) ;
 
 
 typedef struct {
