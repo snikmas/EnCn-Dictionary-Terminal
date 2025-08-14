@@ -7,7 +7,7 @@
 #include "makeRequest.h"
 
 
-int makeRequest(char *option);
+
 int viewFavorites() { return 0;};
 int viewHistory() { return 0;};
 int help() {return 0;};
@@ -35,9 +35,10 @@ int main(void){
     sscanf(line, "%d", &input);
 
 
+    // deafault 0: translate eng-ch; 1 -> chinese-eng
     switch(input){
-      case 1: makeRequest("ec"); break;
-      case 2: makeRequest("ce"); break;
+      case 1: makeRequest(0); break;
+      case 2: makeRequest(1); break;
       case 3: viewFavorites(); break;
       case 4: viewHistory(); break;
       case 5: help(); break;

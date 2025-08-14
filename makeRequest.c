@@ -8,9 +8,7 @@
 #include <openssl/sha.h>
 
 #include "apikeys.h"
-// get word
-// setup curl
-// setup link
+#include "makeRequest.h"
 
 struct data {
     char *response;
@@ -18,15 +16,10 @@ struct data {
 };
 
 
-// receive data from the url->returns the number of bytes successfully handled
-// buffer -> chunk of data that just received
-// size -> size of each data element in bytes
-// number of members
-// user-provier data, our struct
-
 char *buildTime(){
     time_t curTime = time(0);
     char *curTime_str = malloc(20);
+
     // IS NOT GOOD CHECKING
     // if(!curTime_str) return curTime_str;
     snprintf(curTime_str, 20, "%lld", (long long)curTime);
@@ -71,7 +64,7 @@ char *buildUuid(){
 char *buildSha256(char *userInput, char *salt, char *curTime){
 
     char *sign = malloc(512);
-    snprintf(sign, 512, "%s%s%s%s%s", API_ID, userInput, salt, curTime, API_SECRET);
+    snprintf(sign, 512, "%s%s%s%s%s", API_KEY, userInput, salt, curTime, API_SECRET);
 
     unsigned char hash[SHA256_DIGEST_LENGTH];
     unsigned int hash_len;
@@ -119,7 +112,7 @@ char *buildSha256(char *userInput, char *salt, char *curTime){
 }
 
 
-int createUrl(char *url, char *userInput, char *option){
+int createUrl(char *url, char *userInput, int option){
 
     if(strlen(userInput) > 20) return 1;
 
@@ -127,10 +120,11 @@ int createUrl(char *url, char *userInput, char *option){
     
     // LINK FORMAT:
     // url?q=<word>&langType=auto&appKey=<myAppKey>&dicts=<option>&salt=<salt>&sign=<mySign>&signType=v3&curtime=<timestamp>&docType=json>
-    char startUrl[] = "https://openapi.youdao.com/v2/dict";
+    char startUrl[] = "https://openapi.youdao.com/api";
     char *salt = buildUuid();
     char *curTime = buildTime();;
     char *sign = buildSha256(userInput, salt, curTime);
+    char *languagePref = option == 0 ? "from=EN&to=zh-CHS" : "from=zh-CHS&to=en";
 
 
     // ========================================
@@ -148,14 +142,14 @@ int createUrl(char *url, char *userInput, char *option){
     printf("start Url: %s\n", startUrl);
     printf("ECNOEDuserInp: %s\n", encodedInput);
     printf("key: %s\n", API_KEY);
-    printf("option: %s\n", option);
+    printf("option: %i\n", option);
     printf("salt: %s\n", salt);
     printf("ENCOEDEDsign: %s\n", encodedSign);
     printf("curtime: %s\n", curTime);
     
     snprintf(url, 512, 
-        "%s?q=%s&langType=auto&appKey=%s&dicts=%s&salt=%s&sign=%s&signType=v3&curtime=%s&docType=json", 
-        startUrl, encodedInput, API_KEY, option, salt, encodedSign, curTime);
+        "%s?q=%s&%s&appKey=%s&salt=%s&sign=%s&signType=v3&curtime=%s", 
+        startUrl, encodedInput, languagePref, API_KEY, salt, encodedSign, curTime);
 
     printf("full url string: %s\n", url);
 
@@ -173,7 +167,7 @@ int createUrl(char *url, char *userInput, char *option){
 
 
 // ce or ec
-int makeRequest(char *option){
+int makeRequest(int option){
 
     char *url = malloc(512);
     if(!url) return 5;

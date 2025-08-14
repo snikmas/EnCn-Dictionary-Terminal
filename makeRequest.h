@@ -5,14 +5,8 @@
 #include <stdlib.h>
 
 
-
-struct data {
-  char *response;
-  size_t size;
-};
-
 // int creatingUrl(char *url, char *userInput, char *option);
-// int makeRequest(char *option);
+int makeRequest(int option);
 // int handleResponse(char *response_data);
 // int sha256_string(const char *input, char outputBuffer[65]);
 // int buildUUID(char *salt);
