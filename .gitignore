@@ -1,3 +1,6 @@
 *.exe
-apikeys.h
 notes
+config.c
+config.h
+*.o
+

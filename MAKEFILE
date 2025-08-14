@@ -1,10 +1,35 @@
+# Compiler
 CC = gcc
-CFLAGS = -Wall -g
-LIBS = -lcurl -luuid -lcrypto
-myFiles = main.c handleErrors.c makeRequest.c
 
-main: $(myFiles)
-	$(CC) $(CFLAGS) $(myFiles) -o main $(LIBS)
+# Compiler flags
+CFLAGS = -Wall -Wextra -O2 -g -Iinclude
 
+# Libraries to link
+LIBS = -lcurl -lssl -lcrypto -luuid
+
+# Source files
+SRCS = $(wildcard src/*.c)
+
+# Object files
+OBJS = $(SRCS:.c=.o)
+
+# Executable name
+TARGET = main
+
+# Default target
+all: $(TARGET)
+
+# Link object files to create executable
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
+
+# Compile .c files to .o files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Clean compiled files
 clean:
-	rm -f main
+	rm -f $(OBJS) $(TARGET)
+
+# Phony targets
+.PHONY: all clean

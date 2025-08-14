@@ -38,8 +38,8 @@ Supports **bidirectional translation**:
 - [ ] Expand menu and features  
 - [ ] Handle words >20 symbols or containing spaces  
 - [ ] Parse HTML response cleanly  
-- [ ] Create `Makefile`  
-- [ ] Organize folder structure  
+- [x] Create `Makefile`  
+- [x] Organize folder structure  
 
 ---
 
