@@ -6,7 +6,8 @@ const Error error_list[] = {
   { ERR_CONN_FAIL, "Connection failed"},
   { ERR_CURL_INIT_FAIL, "Curl Init failed"},
   { ERR_OUT_OF_MEMORY, "Out of memory"},
-  { ERR_SHA_EVP, "EVP function failed"}
+  { ERR_SHA_EVP, "EVP function failed"},
+  { ERR_PARSER, "Parser Failed"}
 };
 
 void handleErrors(int errorCode, char *place){

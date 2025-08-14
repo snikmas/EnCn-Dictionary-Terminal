@@ -80,6 +80,7 @@ int makeRequest(int option){
         }
 
         printf("\nAPI RSPONSE:\n%s\n", myData.response);
+        parseResponse(myData.response);
         free(myData.response);
         curl_easy_cleanup(curl);
         curl_global_cleanup();

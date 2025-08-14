@@ -15,6 +15,7 @@ typedef struct {
 #define ERR_CURL_INIT_FAIL 3
 #define ERR_OUT_OF_MEMORY 4  
 #define ERR_SHA_EVP 5 
+#define ERR_PARSER 6
 
 // make extern if you want to use in multiple files
 extern const Error error_list[];

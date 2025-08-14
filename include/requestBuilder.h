@@ -6,6 +6,7 @@
 #include "config.h"
 #include "apiRequest.h"
 #include "utils.h"
+#include "parser.h"
 
 
 int makeRequest(int option);

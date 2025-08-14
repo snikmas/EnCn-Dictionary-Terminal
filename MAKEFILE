@@ -2,13 +2,13 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -O2 -g -Iinclude
+CFLAGS = -Wall -Wextra -O2 -g -Iinclude -I./cJSON
 
 # Libraries to link
 LIBS = -lcurl -lssl -lcrypto -luuid
 
 # Source files
-SRCS = $(wildcard src/*.c)
+SRCS = $(wildcard src/*.c) cJSON/cJSON.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)
