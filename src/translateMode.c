@@ -40,6 +40,15 @@ void translateMode(int option){
       if (len == 0 || len > 21) {
           printf("Invalid input: max 20 characters. Try again.\n");
       }
+
+      // if option == 0, en->cn, the input should be in englihs
+      if(option == 0 && !isalpha(userInput[0])){
+        printf("You are in the EN-CN Mode! Please, use English!\n");
+        len = 0;
+      } else if(option == 1 && isalpha(userInput[0])){
+        printf("You are in the CN-EN Mode! Please, use Chinese!\n");
+        len = 0;
+      }
   } while (len == 0 || len > 20);
 
 

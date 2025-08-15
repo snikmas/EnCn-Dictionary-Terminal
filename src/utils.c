@@ -21,38 +21,47 @@ void outputWord(Word *newWord, int option){
   printf("[2] Return to main menu\n");
   printf("[0] Exit program\n");
   
-  int userInput;
-  while(scanf("%i", &userInput) != 1){
-    printf("Invalid Input.\nPlease, try again\n");
-  }
-
-  while (getchar() != '\n' && userInput != EOF); 
-  
-  switch(userInput){
-    case 1: translateMode(option); break;
-    case 2: showMainMenu(); break;
-    case 0:
-      exit(0);
+  int choice = -1;
+  while (1){
+    if (scanf("%i", &choice) != 1 || choice < 0 || choice > 2 ){
+      printf("Invalid Input.\nPlease, try again\n");
+      while (getchar() != '\n');  
+      choice = -1; // reset choice
+      continue;
+    }
+    
+    while (getchar() != '\n');
+    
+    switch(choice){
+      case 1: translateMode(option); break;
+      case 2: showMainMenu(); break;
+      case 0: exit(0);
+    }
   }
 }
 
 
 int showMainMenu(){
-  int choice;
-  char buffer[10];
+  int choice = -1;
   
   while (1) {
-    printf("\tMenu:");
+    printf("Menu:\n");
     printf("[1] Translate EN → CH\n");
     printf("[2] Translate CN → EN\n");
     printf("[3] Favorites\n");
     printf("[4] History\n");
     printf("[0] Exit\n");
 
-    while (scanf("%d", &choice) != 1 || choice < 0 || choice > 5) {
-      printf("Invalid input! Try again:\n>> ");
-      while (getchar() != '\n');  // clear the input buffer
+    if (scanf("%i", &choice) != 1 || choice < 0 || choice > 4) {
+      printf("Invalid Input! Please, try again.\n>> ");
+      // clear input buffer
+      while (getchar() != '\n');  
+      choice = -1; // reset choice
+      continue;
     }
+
+    // clear leftover newline
+    while (getchar() != '\n');
 
     return choice;
   }

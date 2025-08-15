@@ -16,15 +16,15 @@ int main(void){
 
   int continueProgram = 1;
 
-  printf("\nNice to see you! This is Enlgish-Chinese Dictionary.\n\nMenu:\n");
+  printf("\nNice to see you! This is Enlgish-Chinese Dictionary.\n\n");
 
   while(continueProgram){
 
     int choice = showMainMenu();
 
     switch (choice) {
-      case 1: translateMode(0); break; // en->cn
-      case 2: translateMode(1); break; // cn->en
+      case 1: translateMode(0); printf("en-cn mode\n");break; // en->cn
+      case 2: translateMode(1); printf("cn-en mode\n"); break; // cn->en
       case 3: viewFavorites(); break;
       case 4: viewHistory(); break;
       case 0: exitTheProgram(); break;
