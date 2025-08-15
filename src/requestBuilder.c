@@ -146,7 +146,6 @@ int buildUrl(char *url, char *userInput, int option){
         "%s?q=%s&%s&appKey=%s&salt=%s&sign=%s&signType=v3&curtime=%s", 
         startUrl, encodedInput, languagePref, API_KEY, salt, encodedSign, curTime);
         
-    printf("full url string: %s\n", url);
     
     
     free(salt);

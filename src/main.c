@@ -2,8 +2,9 @@
 #include <stdlib.h>
 
 // later i will add
-#include "errors.h"
+#include "translateMode.h"
 #include "utils.h"
+#include "errors.h"
 #include "apiRequest.h"
 
 
@@ -12,40 +13,27 @@ int viewHistory() { return 0;};
 int help() {return 0;};
 int exitTheProgram() {return 0;};
 
-
 int main(void){
 
-  int userPrompt;
+  int continueProgram = 1;
 
   printf("\nNice to see you! This is Enlgish-Chinese Dictionary.\n\nMenu:\n");
-  printf("1 → Translate EN → CH\n");
-  printf("2 → Translate CN → EN\n");
-  printf("3 → Favorites\n");
-  printf("4 → History\n");
-  printf("5 → Help\n");
-  printf("0 → Exit\n");
 
-  while(1){
-    
-    if(scanf("%i", &userPrompt) != 1){
-      return 1;
-    }
+  while(continueProgram){
 
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    int choice = showMainMenu();
+    printf("%d\n", choice);
 
-    // deafault 0: translate eng-ch; 1 -> chinese-eng
-    switch(userPrompt){
-      case 1: makeRequest(0); break;
-      case 2: makeRequest(1); break;
+    switch (choice) {
+      case 1: translateMode(0); break; // en->cn
+      case 2: translateMode(1); break; // cn->en
       case 3: viewFavorites(); break;
       case 4: viewHistory(); break;
       case 5: help(); break;
-      case 0: exitTheProgram(); return 0;
-      default:
-        printf("Wrong Input, User, Try again:\n");
+      case 0: continueProgram = 0; break;
+      default: printf("Invalid choice.\n");
     }
-  }
 
-  return 0;
+    return 0;
+  }
 }

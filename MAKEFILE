@@ -30,6 +30,7 @@ $(TARGET): $(OBJS)
 # Clean compiled files
 clean:
 	rm -f $(OBJS) $(TARGET)
+	rm -f .o
 
 # Phony targets
 .PHONY: all clean

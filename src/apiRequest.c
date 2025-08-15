@@ -25,8 +25,14 @@ size_t write_data(void *buffer, size_t size, size_t nmemb, void *userInput){
 
 
 
-// ce or ec
-int makeRequest(int option){
+int makeRequest(int option, Word *newWord){
+
+    // if option == 0;
+    if (option == 0){
+        printf("CH -> EN Mode\n");
+    } else {
+        printf("EN -> CN Mode\n");
+    }
 
     char *url = malloc(512);
 
@@ -64,23 +70,22 @@ int makeRequest(int option){
     CURL *curl = curl_easy_init();
     if(curl){
 
-        //3. write link
         buildUrl(url, userInput, option);
         
         curl_easy_setopt(curl, CURLOPT_URL, url);
-        // send data to this function
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
-        // pass our chunk struct ti o here
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &myData); // get data
         
+
         res = curl_easy_perform(curl);
         if(res != CURLE_OK) {
             handleErrors(ERR_CURL_INIT_FAIL, "makeRequest");
             return 0;
         }
 
-        printf("\nAPI RSPONSE:\n%s\n", myData.response);
-        parseResponse(myData.response);
+        // parse: old word and new word
+        parseResponse(myData.response, newWord, option);
+        
         free(myData.response);
         curl_easy_cleanup(curl);
         curl_global_cleanup();

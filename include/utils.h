@@ -5,22 +5,18 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "word.h"
+#include "apiRequest.h"
+#include "errors.h"
+#include "translateMode.h"
 
-typedef struct {
-    char *wordEng;
-    char *wordChinese;
-    char *pinyin;
-    bool isFavorite;
-    char *tags;
-} Word;
-
-extern Word words_list[100];
-
-int makeRequest(int option);
+int showMainMenu();
+int makeRequest(int option, Word *newWord);
 int viewFavorites(); 
 int viewHistory();
 int help();
 int exitTheProgram();
+void outputWord(Word *newWord, int option);
 
 
 

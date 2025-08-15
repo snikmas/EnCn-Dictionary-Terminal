@@ -10,6 +10,8 @@
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 
+#include "word.h"
+#include "utils.h"
 #include "config.h"
 #include "errors.h"
 #include "requestBuilder.h"
