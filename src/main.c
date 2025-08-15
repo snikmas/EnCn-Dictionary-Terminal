@@ -10,7 +10,6 @@
 
 int viewFavorites() { return 0;};
 int viewHistory() { return 0;};
-int help() {return 0;};
 int exitTheProgram() {return 0;};
 
 int main(void){
@@ -22,16 +21,13 @@ int main(void){
   while(continueProgram){
 
     int choice = showMainMenu();
-    printf("%d\n", choice);
 
     switch (choice) {
       case 1: translateMode(0); break; // en->cn
       case 2: translateMode(1); break; // cn->en
       case 3: viewFavorites(); break;
       case 4: viewHistory(); break;
-      case 5: help(); break;
-      case 0: continueProgram = 0; break;
-      default: printf("Invalid choice.\n");
+      case 0: exitTheProgram(); break;
     }
 
     return 0;

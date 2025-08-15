@@ -21,6 +21,7 @@ struct data {
     size_t size;
 };
 
+void makeRequest(int option, Word *newWord, char *userInput);
 size_t write_data(void *buffer, size_t size, size_t nmemb, void *userInput);
 
 

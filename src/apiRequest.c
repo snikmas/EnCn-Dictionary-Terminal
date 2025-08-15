@@ -25,35 +25,11 @@ size_t write_data(void *buffer, size_t size, size_t nmemb, void *userInput){
 
 
 
-int makeRequest(int option, Word *newWord){
+void makeRequest(int option, Word *newWord, char *userInput){
 
-    // if option == 0;
-    if (option == 0){
-        printf("CH -> EN Mode\n");
-    } else {
-        printf("EN -> CN Mode\n");
-    }
+    // if option == 0 -> EN->CN;
 
     char *url = malloc(512);
-
-    char *userInput = malloc(99);
-    if(!url || !userInput) {
-        handleErrors(ERR_OUT_OF_MEMORY, "makeRequest");
-        return 0;
-    }
-
-    
-    printf("Input your word:\n>> ");
-    if(fgets(userInput, 99, stdin) == NULL){
-        handleErrors(ERR_OUT_OF_MEMORY, "makeRequest");
-        return -1;
-    }
-    // remove trailing newline if any
-    size_t len = strlen(userInput);
-    if(len > 0 && userInput[len-1] == '\n') userInput[len-1] = '\0';
-    
-    
-
     struct data myData = {0};
     // 2.setup curl
     
@@ -62,8 +38,6 @@ int makeRequest(int option, Word *newWord){
         free(userInput);
         free(myData.response);
         handleErrors(ERR_CURL_INIT_FAIL, "makeRequest");
-        return 0;
-
     } 
         
     CURLcode res;
@@ -80,10 +54,8 @@ int makeRequest(int option, Word *newWord){
         res = curl_easy_perform(curl);
         if(res != CURLE_OK) {
             handleErrors(ERR_CURL_INIT_FAIL, "makeRequest");
-            return 0;
         }
 
-        // parse: old word and new word
         parseResponse(myData.response, newWord, option);
         
         free(myData.response);
@@ -95,8 +67,6 @@ int makeRequest(int option, Word *newWord){
         free(userInput);
         free(myData.response);
         handleErrors(ERR_CURL_INIT_FAIL, "makeRequest");
-        return -1;
     }
         
-    return 0;
 }

@@ -10,10 +10,9 @@
 #include "parser.h"
 
 
-int makeRequest(int option, Word *newWord);
 char *buildUuid();
 char *buildSha256(char *userInput, char *salt, char *curTime);
-int buildUrl(char *url, char *userInput, int option);
+void buildUrl(char *url, char *userInput, int option);
 char *buildTime();
 
 #endif 

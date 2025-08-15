@@ -91,16 +91,7 @@ char *buildSha256(char *userInput, char *salt, char *curTime){
 
 
 
-int buildUrl(char *url, char *userInput, int option){
-
-    while(strlen(userInput) > 20) {
-        printf("Currently, the dictionary accepts only <20 characters word.\nPlease, write a new one:\n");
-        if(scanf("%19s", userInput)!= 1){
-            handleErrors(ERR_OUT_OF_MEMORY, "buildUrl");
-        };
-        
-    };
-
+void buildUrl(char *url, char *userInput, int option){
     
     char startUrl[] = "https://openapi.youdao.com/api";
     char *salt = buildUuid();
@@ -109,20 +100,15 @@ int buildUrl(char *url, char *userInput, int option){
     char *languagePref = option == 0 ? "from=EN&to=zh-CHS" : "from=zh-CHS&to=en";
     if(!salt || !curTime || !sign || !languagePref){
         handleErrors(ERR_OUT_OF_MEMORY, "buildUrl");
-        return -1;
-
     }
 
 
     CURL *curl = curl_easy_init();
     if(!curl){
-        printf("no no no");
         free(salt);
         free(curTime);
         free(sign);
         handleErrors(ERR_CURL_INIT_FAIL, "buildUrl");
-        return -1;
-
     }
 
     char *encodedInput = curl_easy_escape(curl, userInput, 0);
@@ -133,14 +119,7 @@ int buildUrl(char *url, char *userInput, int option){
         free(curTime);
         curl_easy_cleanup(curl);
         handleErrors(ERR_OUT_OF_MEMORY, "buildUrl");
-        return -1;
     }
-    
-    // printf("key: %s\n", API_KEY);
-    // printf("option: %i\n", option);
-    // printf("salt: %s\n", salt);
-    // printf("ENCOEDEDsign: %s\n", encodedSign);
-    // printf("curtime: %s\n", curTime);
     
     snprintf(url, 512, 
         "%s?q=%s&%s&appKey=%s&salt=%s&sign=%s&signType=v3&curtime=%s", 
@@ -154,8 +133,6 @@ int buildUrl(char *url, char *userInput, int option){
     curl_free(encodedInput);
     curl_free(encodedSign);
     curl_easy_cleanup(curl);
-        
-    return 0;
 }
 
 

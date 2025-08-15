@@ -11,7 +11,6 @@
 #include "translateMode.h"
 
 int showMainMenu();
-int makeRequest(int option, Word *newWord);
 int viewFavorites(); 
 int viewHistory();
 int help();

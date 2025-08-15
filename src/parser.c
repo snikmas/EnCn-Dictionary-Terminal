@@ -5,12 +5,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-int parseResponse(char *response, Word *newWord, int option) {
+void parseResponse(char *response, Word *newWord, int option) {
 
     cJSON *json = cJSON_Parse(response);
     if (!json) {
         handleErrors(ERR_PARSER, "parseResponse");
-        return 1;
     }
 
 
@@ -27,6 +26,9 @@ int parseResponse(char *response, Word *newWord, int option) {
                 // default: en -> chinese
                 newWord->wordEn = strdup(wordJson->valuestring);
                 newWord->wordCn = strdup(translationJson->valuestring);
+            } else { // option == 1
+                newWord->wordCn = strdup(wordJson->valuestring);
+                newWord->wordEn = strdup(translationJson->valuestring);
             }
         } else {
             handleErrors(ERR_PARSER, "parseResponse");
@@ -37,5 +39,4 @@ int parseResponse(char *response, Word *newWord, int option) {
     }
 
     cJSON_Delete(json);
-    return 0;
 }

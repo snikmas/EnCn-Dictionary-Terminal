@@ -11,6 +11,6 @@
 #include "cJSON.h"
 #include "requestBuilder.h"
 
-int parseResponse(char *response, Word *newWord, int option);
+void parseResponse(char *response, Word *newWord, int option);
 
 #endif

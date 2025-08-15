@@ -7,9 +7,9 @@ void outputWord(Word *newWord, int option){
   printf("────────────────────────────────\n");
   if(option == 0){ // default mode: en->chinese
     printf("Input: %s\n", newWord->wordEn);
-    printf("Translation\n: %s", newWord->wordCn);
+    printf("Translation: %s\n", newWord->wordCn);
     // add pinuin
-  } else {
+  } else { // 1: cn -> en
     printf("Input: %s\n", newWord->wordCn);
     printf("Translation: %s\n", newWord->wordEn);
   }
@@ -39,18 +39,21 @@ void outputWord(Word *newWord, int option){
 
 int showMainMenu(){
   int choice;
+  char buffer[10];
   
-  printf("[1] Translate EN → CH\n");
-  printf("[2] Translate CN → EN\n");
-  printf("[3] Favorites\n");
-  printf("[4] History\n");
-  printf("[5] Help\n");
-  printf("[0] Exit\n");
+  while (1) {
+    printf("\tMenu:");
+    printf("[1] Translate EN → CH\n");
+    printf("[2] Translate CN → EN\n");
+    printf("[3] Favorites\n");
+    printf("[4] History\n");
+    printf("[0] Exit\n");
 
-  while (scanf("%d", &choice) != 1) {
-    printf("Invalid input. Try again: \n>> ");
+    while (scanf("%d", &choice) != 1 || choice < 0 || choice > 5) {
+      printf("Invalid input! Try again:\n>> ");
+      while (getchar() != '\n');  // clear the input buffer
+    }
+
+    return choice;
   }
-  while (getchar() != '\n');
-
-  return choice;
 }
