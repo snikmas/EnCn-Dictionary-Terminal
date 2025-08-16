@@ -13,7 +13,7 @@ void outputWord(Word *newWord, int option){
     printf("Input: %s\n", newWord->wordCn);
     printf("Translation: %s\n", newWord->wordEn);
   }
-  printf("────────────────────────────────\n");
+  printf("\n────────────────────────────────\n");
 
   // add: add to favorites
   printf("What would you like to do next?\n");
@@ -45,7 +45,7 @@ int showMainMenu(){
   int choice = -1;
   
   while (1) {
-    printf("Menu:\n");
+    printf("\nMenu:\n");
     printf("[1] Translate EN → CH\n");
     printf("[2] Translate CN → EN\n");
     printf("[3] Favorites\n");
@@ -63,6 +63,12 @@ int showMainMenu(){
     // clear leftover newline
     while (getchar() != '\n');
 
-    return choice;
+    switch (choice) {
+      case 1: translateMode(0); printf("en-cn mode\n"); break; // en->cn
+      case 2: translateMode(1); printf("cn-en mode\n"); break; // cn->en
+      case 3: viewFavorites(); break;
+      case 4: viewHistory(); break;
+      case 0: exitTheProgram(); break;
+    }
   }
 }
