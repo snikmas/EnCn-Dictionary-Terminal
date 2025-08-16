@@ -5,15 +5,15 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "saved.h"
 #include "word.h"
 #include "apiRequest.h"
 #include "errors.h"
 #include "translateMode.h"
 #include "history.h"
 
-void actions(char *entry, int option);
+void actions(char *entry, int option, Word *newWord);
 int showMainMenu();
-int viewFavorites(); 
 void viewHistory();
 int exitTheProgram();
 void outputWord(Word *newWord, int option);

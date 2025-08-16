@@ -8,7 +8,6 @@
 #include "apiRequest.h"
 
 
-int viewFavorites() { return 0;};
 int exitTheProgram() {return 0;};
 
 int main(void){
@@ -20,15 +19,6 @@ int main(void){
   while(continueProgram){
 
     showMainMenu();
-    // int choice = showMainMenu();
-
-    // switch (choice) {
-    //   case 1: translateMode(0); printf("en-cn mode\n");break; // en->cn
-    //   case 2: translateMode(1); printf("cn-en mode\n"); break; // cn->en
-    //   case 3: viewFavorites(); break;
-    //   case 4: viewHistory(); break;
-    //   case 0: exitTheProgram(); break;
-    // }
 
     return 0;
   }

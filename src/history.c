@@ -37,9 +37,9 @@ void viewHistory(){
   } else {
     printf("No history available.\n");
     printf("Tip: Every translation is automatically saved here.\n");
-    actions("onlyMenuBack", -1);
+    actions("onlyMenuBack", -1, NULL);
   }
-  actions("historyAction", -1);
+  actions("historyAction", -1, NULL);
 
 }
 
