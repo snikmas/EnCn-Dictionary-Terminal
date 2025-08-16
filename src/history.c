@@ -80,8 +80,53 @@ void deleteHistory(){
 }
 
 void deleteEntry(){
-  printf("hi bob");
-  showMainMenu();
+  printf("hi bob\n");
+  printf("Input the number of the word that you would like to delete:\n>> ");
+  int number = -1;
+  while(1){
+    if(scanf("%i", &number) != 1 || number > 9 || number < 0){
+      printf("Invalid Input!\nTry again:\n>> ");
+      while (getchar() != '\n');  
+      number = -1; // reset choice
+      continue;
+    }
+
+    break;
+  }
+
+
+  NodeWord *current = malloc(sizeof(NodeWord));
+  
+  current = HEAD;
+  if(number == 1){
+    HEAD = HEAD->next;
+    free(current->word);
+    free(current);
+    if(HEAD == NULL) TAIL = NULL;
+  } else { 
+    NodeWord *prev = malloc(sizeof(NodeWord));
+    prev = NULL;
+    for(int i = 1; i <= number && current != NULL; i++){
+      prev = current;
+      current = current->next;
+    }
+
+    if (current == NULL){
+      printf("Position out of bounds!\n");
+      viewHistory();
+    } 
+    prev->next = current->next;
+    if(current == TAIL){
+      TAIL = prev;
+    }
+
+    free(current->word);
+    free(current);
+  }
+
+  printf("The word was successfully deleted!\n");
+  viewHistory();
+  
 }
 
 
