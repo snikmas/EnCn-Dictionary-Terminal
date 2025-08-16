@@ -9,7 +9,6 @@
 
 
 int viewFavorites() { return 0;};
-int viewHistory() { return 0;};
 int exitTheProgram() {return 0;};
 
 int main(void){

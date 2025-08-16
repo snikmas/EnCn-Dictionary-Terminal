@@ -3,8 +3,9 @@
 
 
 #include <stdbool.h>
+#include <stddef.h>
 
-typedef struct {
+typedef struct Word{
     char *wordEn;
     char *wordCn;
     char *pinyin;
@@ -13,6 +14,17 @@ typedef struct {
 } Word;
 
 
+typedef struct NodeWord{
+    struct NodeWord *next;
+    Word *word;
+} NodeWord;
 
+extern struct NodeWord *TAIL; // to get O(n)
+extern struct NodeWord *HEAD;
+
+
+void deleteHistory();
+void deleteEntry();
+void history_operations(Word *newWord, char operation);
 
 #endif 

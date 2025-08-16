@@ -9,11 +9,12 @@
 #include "apiRequest.h"
 #include "errors.h"
 #include "translateMode.h"
+#include "history.h"
 
+void actions(char *entry, int option);
 int showMainMenu();
 int viewFavorites(); 
-int viewHistory();
-int help();
+void viewHistory();
 int exitTheProgram();
 void outputWord(Word *newWord, int option);
 
