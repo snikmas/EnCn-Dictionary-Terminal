@@ -18,6 +18,7 @@ void welcomePage();
 void actions(char *entry, int option, Word *newWord);
 void viewHistory();
 int exitTheProgram();
+void translateMode(int option);
 void outputWord(Word *newWord, int option);
 
 
