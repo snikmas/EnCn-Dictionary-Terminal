@@ -1,18 +1,26 @@
-#include <ncurses.h>
-#include <string.h>
-#include <unistd.h>
+#include "acsii.h"
 
 char *welcome_title = "WELCOME TO TERMINAL";
 char *mascot[] = {
     "   (\\_._/)",
-    "   ( •‿• )   System Online.",
+    "   ( ^ ^ )   System Online.",
     "   /  V  \\   Dictionary Booting...",
-    "  /(  -  )\\",
+    "  /(  _  )\\",
     "   ^^   ^^"
 };
 int mascot_lines = sizeof(mascot) / sizeof(mascot[0]);
 
-int main() {
+void draw_loading(WINDOW *win, int y, int x, int width, int percent) {
+    int fill = (percent * width) / 100;
+    mvwprintw(win, y, x, "[");
+    for (int i = 0; i < width; i++)
+        waddch(win, (i < fill) ? '#' : '.');
+    waddch(win, ']');
+    wprintw(win, " %3d%%", percent);
+    wrefresh(win);
+}
+
+void welcomePage() {
     initscr();
     noecho();
     cbreak();
@@ -35,37 +43,27 @@ int main() {
     for (int i = 0; i < mascot_lines; i++) {
         mvwprintw(mascotWin, i + 1, 2, "%s", mascot[i]);
         wrefresh(mascotWin);
-        usleep(150000); // little animation effect
+        usleep(150000);
     }
 
-    // Message Window
-    WINDOW *msgWin = newwin(3, menuWidth, 4 + mascot_lines + 3, (xMax - menuWidth) / 2);
-    box(msgWin, 0, 0);
-    char *msg = "Please wait while we prepare your session...";
-    mvwprintw(msgWin, 1, (menuWidth - strlen(msg)) / 2, "%s", msg);
-    wrefresh(msgWin);
+    // Loading Window
+    WINDOW *loadingWin = newwin(3, menuWidth, 4 + mascot_lines + 2, (xMax - menuWidth) / 2);
+    box(loadingWin, 0, 0);
+    mvwprintw(loadingWin, 0, 2, "Loading...");
+    wrefresh(loadingWin);
 
-    // Input Window (like your example)
-    WINDOW *inputWin = newwin(3, menuWidth, yMax - 4, (xMax - menuWidth) / 2);
-    box(inputWin, 0, ' ');
-    mvwprintw(inputWin, 1, 2, "Enter your command:");
-    wrefresh(inputWin);
+    int barWidth = menuWidth - 10;
+    for (int i = 0; i <= 100; i += 10) {
+        draw_loading(loadingWin, 1, 2, barWidth, i);
+        usleep(200000);
+    }
 
-    char input[100];
-    echo();
-    curs_set(1);
-    wgetnstr(inputWin, input, sizeof(input) - 1);
+    // Show "Press any key to continue" message
+    mvwprintw(loadingWin, 2, 2, "Press any key to continue...");
+    wrefresh(loadingWin);
 
-    // Result Window
-    noecho();
-    curs_set(0);
-    WINDOW *resultWin = newwin(4, menuWidth, yMax - 8, (xMax - menuWidth) / 2);
-    box(resultWin, 0, 0);
-    mvwprintw(resultWin, 1, 2, "Input: %s", input);
-    mvwprintw(resultWin, 2, 2, "Translation: <demo>");
-    wrefresh(resultWin);
+    // Wait for key press
+    wgetch(loadingWin);
 
     getch();
-    endwin();
-    return 0;
 }

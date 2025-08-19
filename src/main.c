@@ -20,16 +20,16 @@ int main(void){
   curs_set(0);
 
   welcomePage();
+  int choice = menuPage();
   
+  switch(choice){
+    case 0: translateMode(0); break; // EN -> CN
+    case 1: translateMode(1); break; // CN -> EN
+    case 2: viewSaved(); break;
+    case 3: viewHistory(); break;
+    case 4: endwin(); exit(0);       // exit
+}
 
-  int continueProgram = 1;
 
-  printf("\nNice to see you! This is Enlgish-Chinese Dictionary.\n\n");
-
-  while(continueProgram){
-
-    showMainMenu();
-
-    return 0;
-  }
+  return 0;
 }
