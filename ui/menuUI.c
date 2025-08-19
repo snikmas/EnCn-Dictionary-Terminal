@@ -1,53 +1,100 @@
 #include <ncurses.h>
+#include <string.h>
 
-int main(){
+char *menus_items[] = {
+  "EN - CN Dictionary",
+  "Welcome, Hacker.\nTerminal Ready.",
+  "MENU",
+  "[1] Translate EN -> CN",
+  "[2] Translate CN -> EN",
+  "[3] Saved Translations",
+  "[4] History",
+  "[0] Exit",
+};
 
-  // NOT PIXELS -> LINES! WE USE CURSOR
-  initscr();
+int items = sizeof(menus_items) / sizeof(menus_items[0]) - 3;
 
-  const width = 120;
-  const height = 35;
-  int height, width, start_y, start_x;
-  height = 10;
-  width = 20;
-  start_x = start_y = 10;
+char *mascot[] = {
+        "  (\\_._/)",
+        "  ( o o )      Welcome, Hacker.",
+        "  /  V  \\      Terminal Ready.",
+        " /(  _  )\\",
+        "   ^^ ^^"
+    };
+
+int mascot_lines = sizeof(mascot) / sizeof(mascot[0]);
+
+
+
+int main() {
+    initscr();          // start ncurses
+    noecho();           // don’t echo input
+    cbreak();           // disable line buffering
+    curs_set(0);        // hide cursor
+
+
+    int xMax, yMax;
+    getmaxyx(stdscr, yMax, xMax);
+
+    WINDOW *menuTitle = newwin(5, 40, 0, 0);
+    box(menuTitle, 0, 0);
+
+    mvwprintw(menuTitle, 2, 10, menus_items[0]);
+    refresh();
+    wrefresh(menuTitle);
+
+    // good
+    int heightMenu, widthMenu;
+    getmaxyx(menuTitle, heightMenu, widthMenu);
+    WINDOW *mascotWin = newwin(mascot_lines + 2, xMax - 4, heightMenu, 2 );
   
-  WINDOW *win = newwin(height, width, start_y, start_x);
-  refresh(); //1. we created a window
-  
-  // border
-  box(win, 0, 0 );
-  mvwprintw(win, 1, 1, "this is my booox\n");  // writting in the our window box
-  wrefresh(win); // 2. resfresh our window
-  // we use "imaginary" cursor: we do move -> and a cursor change the place
+    for(int i = 0; i < mascot_lines; i++)
+      mvwprintw(mascotWin, i + 1, 1, "%s", mascot[i]);
 
-  // move the cursor to the specified location
-  int x, y;
-  x = y = 10;
-  move(y, x);
-  refresh();
+    wrefresh(mascotWin);
 
-  // prints a string(const char*)  to a window = printf
-  // printw("hiiiiiii");
+    int heightMascot, widthMascot;
+    
+    getmaxyx(mascotWin, heightMascot, widthMascot);
+    int menuHeight = items + 2;
+    int menuWidth = 40;
+    int menuStartY = heightMenu + heightMascot + 1;
+    int menuStartX = 0;
 
-  // mvprintw(10, 1, "go");
+    WINDOW *menuUI = newwin(menuHeight, menuWidth, menuStartY - 1, menuStartX);
+    box(menuUI, 0, 0);
 
-  // clear(); 
+    for(int i = 3; i < 3 + items; i++){
+      mvwprintw(menuUI, i - 2, 1, "%s", menus_items[i]);
+    }
+    wrefresh(menuUI);
+    
+    keypad(menuUI, TRUE);
+    int choice = 0;
+    
+    while(1){
+      int menuWidth = 40;
+      for(int i = 0; i < items; i++){
+        if(i == choice) wattron(menuUI, A_REVERSE);
+        else wattroff(menuUI, A_REVERSE);
 
-  // refreshes the screen to match whats in memory
-  // refresh();
+        mvwprintw(menuUI, i + 1, 1, "%-*s", menuWidth - 2, menus_items[i + 3]);
 
-  move(0, 0);
-  // whats for user input returns int value of that key
-  int c = getch();
-  printw("%d", c);
+      }
+      wrefresh(menuUI);
 
-  getch();
+      int c = wgetch(menuUI);
+      if(c == KEY_UP){
+        choice = (choice - 1 + items) % items;
+      } else if(c == KEY_DOWN){
+        choice = (choice + 1) % items;
+      } else if(c == '\n'){
+        break;
+      }
+    }
 
-
-  
-  endwin();
-
-
-  return 0;
+    clear();
+    getch();
+    endwin();
+    return 0;
 }
