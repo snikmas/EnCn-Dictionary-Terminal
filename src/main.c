@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
-#include "menu.h"
 
 // later i will add
-#include "translateMode.h"
+#include "ascii.h"
 #include "utils.h"
+#include "translateMode.h"
 #include "main.h"
 #include "errors.h"
 #include "apiRequest.h"
@@ -18,8 +18,10 @@ int main(void){
   noecho();
   cbreak();
   curs_set(0);
+  refresh();
 
   welcomePage();
+  // refresh();
   int choice = menuPage();
   
   switch(choice){
@@ -30,6 +32,7 @@ int main(void){
     case 4: endwin(); exit(0);       // exit
 }
 
+  endwin();
 
   return 0;
 }

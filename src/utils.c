@@ -23,39 +23,6 @@ void outputWord(Word *newWord, int option){
 }
 
 
-int showMainMenu(){
-  int choice = -1;
-  
-  while (1) {
-    printf("\nMenu:\n");
-    printf("[1] Translate EN → CH\n");
-    printf("[2] Translate CN → EN\n");
-    printf("[3] Saved\n");
-    printf("[4] History\n");
-    printf("[0] Exit\n");
-
-    if (scanf("%i", &choice) != 1 || choice < 0 || choice > 4) {
-      printf("Invalid Input! Please, try again.\n>> ");
-      // clear input buffer
-      while (getchar() != '\n');  
-      choice = -1; // reset choice
-      continue;
-    }
-
-    // clear leftover newline
-    while (getchar() != '\n');
-
-    switch (choice) {
-      case 1: translateMode(0); printf("en-cn mode\n"); break; // en->cn
-      case 2: translateMode(1); printf("cn-en mode\n"); break; // cn->en
-      case 3: viewSaved(); break;
-      case 4: viewHistory(); break;
-      case 0: exitTheProgram(); break;
-    }
-  }
-}
-
-
 void actions(char *entry, int option, Word *newWord){
   
   int choice = -1;
@@ -97,7 +64,7 @@ void actions(char *entry, int option, Word *newWord){
           choice = -1;
           continue;
         case 1: translateMode(option); break;
-        case 2: showMainMenu(); break;
+        case 2: menuPage(); break;
         case 0: exit(0);
       }
     }
@@ -120,7 +87,7 @@ void actions(char *entry, int option, Word *newWord){
       switch(choice){
         case 1: history_operations(NULL, 'r'); break;
         case 2: history_operations(NULL, 'R'); break;
-        case 0: showMainMenu(); break;
+        case 0: menuPage(); break;
       }
     }
   } else if(strcmp(entry, "onlyMenuBack") == 0){
@@ -138,7 +105,7 @@ void actions(char *entry, int option, Word *newWord){
       while (getchar() != '\n');
       
       switch(choice){
-        case 0: showMainMenu(); break;
+        case 0: menuPage(); break;
       }
     }
   } else if (strcmp(entry, "savedAction") == 0){
@@ -160,7 +127,7 @@ void actions(char *entry, int option, Word *newWord){
       switch(choice){
         case 1: saved_operations(NULL, 'r'); break;
         case 2: saved_operations(NULL, 'R'); break;
-        case 0: showMainMenu(); break;
+        case 0: menuPage(); break;
       }
     }
   }

@@ -5,32 +5,55 @@ CC = gcc
 CFLAGS = -Wall -Wextra -O2 -g -Iinclude -I./cJSON
 
 # Libraries to link
-LIBS = -lcurl -lssl -lcrypto -luuid
+LIBS = -lcurl -lssl -lcrypto -luuid -lncurses
+
+# Directories
+SRC_DIR = src
+UI_DIR  = ui
+OBJ_DIR = obj
+BIN_DIR = bin
 
 # Source files
-SRCS = $(wildcard src/*.c) cJSON/cJSON.c
+SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(UI_DIR)/*.c) cJSON/cJSON.c
 
-# Object files
-OBJS = $(SRCS:.c=.o)
+# Object files in obj folder
+OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(notdir $(SRCS)))
+
+# Dependency files (.d)
+DEPS = $(OBJS:.o=.d)
 
 # Executable name
-TARGET = main
+TARGET = ./main
 
 # Default target
-all: $(TARGET)
+all: $(OBJ_DIR) $(BIN_DIR) $(TARGET)
 
-# Link object files to create executable
+# Link object files
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
 
-# Compile .c files to .o files
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# Compile source files to object files with dependency generation
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(UI_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+
+$(OBJ_DIR)/%.o: cJSON/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+
+# Include dependency files if they exist
+-include $(DEPS)
+
+# Create obj and bin directories if missing
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
 
 # Clean compiled files
 clean:
-	rm -f $(OBJS) $(TARGET)
-	rm -f .o
+	rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d $(TARGET)
 
-# Phony targets
 .PHONY: all clean

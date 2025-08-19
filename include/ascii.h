@@ -1,4 +1,4 @@
-#ifdef ASCII_H
+#ifndef ASCII_H
 #define ASCII_H
 
 #include <ncurses.h>
@@ -12,12 +12,11 @@ void welcomePage();
 
 // menu
 int menuPage();
-char *menus_items[];
-int items;
-char *mascot[];
-int mascot_lines;
+extern char *menus_items[];
+extern int items;
 
 
 
 
-#endif ASCII_H
+
+#endif 

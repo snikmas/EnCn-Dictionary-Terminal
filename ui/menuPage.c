@@ -1,3 +1,4 @@
+#include <ncurses.h>
 #include "ascii.h"
 
 char *menus_items[] = {

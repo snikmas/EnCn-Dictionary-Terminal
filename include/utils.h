@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "ascii.h"
 #include "saved.h"
 #include "word.h"
 #include "apiRequest.h"
@@ -12,8 +13,9 @@
 #include "translateMode.h"
 #include "history.h"
 
+int menuPage();
+void welcomePage();
 void actions(char *entry, int option, Word *newWord);
-int showMainMenu();
 void viewHistory();
 int exitTheProgram();
 void outputWord(Word *newWord, int option);
