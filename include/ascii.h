@@ -12,6 +12,10 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#include "utils.h"
+#include "errors.h"
+#include "word.h"
+
 // welcome page
 void draw_loading(WINDOW *win, int y, int x, int width, int percent);
 void welcomePage();

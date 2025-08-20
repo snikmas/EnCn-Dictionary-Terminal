@@ -69,7 +69,20 @@ void translateMode(int mode) {
     mvwprintw(inputWin, 1, 2, "%s", prompt);
     curs_set(1);
 
-    char input[99];
+
+    // improve, using malloc, later can put it to the another file
+    char *input = malloc(sizeof(char) * 100);
+    Word *newWord = malloc(sizeof(Word));
+    if(!input || !newWord){ 
+        handleErrors(ERR_OUT_OF_MEMORY, "translateMode");
+    }
+    int len = strlen(input);
+    if(len > 0 && input[len - 1] == '\n') input[len - 1] = '\0';
+
+    
+    makeRequest(mode, newWord, input);
+    
+
     wmove(inputWin, 1, strlen(prompt) + 2);
     wgetnstr(inputWin, input, sizeof(input) - 1);
     wrefresh(inputWin);
@@ -101,9 +114,9 @@ void translateMode(int mode) {
     // Show input and placeholder translation
     mvwprintw(resultWin, 1, 2, "Input: %s", input);
     if (mode == 0)
-        mvwprintw(resultWin, 2, 2, "Translation: [EN -> CN result]");
+        mvwprintw(resultWin, 2, 2, "Translation: %s", newWord->wordEn);
     else
-        mvwprintw(resultWin, 2, 2, "Translation: [CN -> EN result]");
+        mvwprintw(resultWin, 2, 2, "Translation: %s", newWord->wordCn);
     
     wrefresh(resultWin);
 
