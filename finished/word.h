@@ -2,6 +2,7 @@
 #define WORD_H
 
 #include "ascii.h"
+#include <stdbool.h>
 
 typedef struct Word {
   char *wordEn;

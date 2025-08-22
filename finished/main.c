@@ -1,4 +1,4 @@
-#include "ascii.h"
+#include "main.h"
 
 int main(void){
 
@@ -8,13 +8,14 @@ int main(void){
   curs_set(0);
   refresh();
 
-  welcomePage();
+  welcomePage(); // completed.
 
-  menuPage();
+  int choice = menuPage();
+
+  printf("%i choice", choice);
 
 
-
-  endwinO();
+  endwin();
 
   return 0;
 
