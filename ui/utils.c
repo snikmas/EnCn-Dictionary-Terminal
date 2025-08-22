@@ -41,13 +41,14 @@ void actions(char *entry, int option, Word *newWord) {
     int menuStartY = (yMax - menuHeight) / 2;
     int menuStartX = (xMax - menuWidth) / 2;
 
-    WINDOW *menuWin = newwin(menuHeight, menuWidth, menuStartY, 0);
+    WINDOW *menuWin = newwin(menuHeight, menuWidth, menuStartY, menuStartX);
     box(menuWin, 0, 0);
     keypad(menuWin, TRUE);
     wrefresh(menuWin);
 
     int choice = 0;
     int ch;
+    int saved = 0; // flag to track if word has been saved
 
     while (1) {
         // Draw menu
@@ -60,32 +61,42 @@ void actions(char *entry, int option, Word *newWord) {
 
         ch = wgetch(menuWin);
 
-        // Save word with '*'
+        // Handle saving word via '*'
         if (strcmp(entry, "outputAction") == 0 && ch == '*') {
-            if(option == -2){
-              mvprintw(menuWin, menuHeight - 1, 2, "The word has already saved");
-              wrefresh(menuWin);
-              napms(800);
-              actions(entry, -2, newWord);
+            if (saved) {
+                mvwprintw(menuWin, menuHeight + 1, 0, "The word has already been saved!");
+            } else {
+                addSavedWord(newWord);
+                saved = 1;
+                mvwprintw(menuWin, menuHeight + 1, 0, "[*] Word saved!");
+                wrefresh(menuWin);
+                napms(800);
+                mvwprintw(menuWin, menuHeight + 1, 0, "                               "); // clear message
+                wrefresh(menuWin);
             }
-            addSavedWord(newWord);
-            mvwprintw(menuWin, menuHeight - 1, 2, "[*] Word saved!");
-            wrefresh(menuWin);
-            napms(800);
-            mvwprintw(menuWin, menuHeight - 1, 2, "                     "); // clear message
-            wrefresh(menuWin);
-            actions(entry, -2, newWord);
-            break;
+                continue; // stay in the menu
         }
 
+        // Navigate menu
         if (ch == KEY_UP) choice = (choice - 1 + num_items) % num_items;
         else if (ch == KEY_DOWN) choice = (choice + 1) % num_items;
         else if (ch == '\n') {
+            // Execute menu action
             if (strcmp(entry, "outputAction") == 0) {
                 switch (choice) {
-                    case 0: addSavedWord(newWord); break;  // Save the word
+                    case 0: // Save word via Enter
+                        if (!saved) {
+                            addSavedWord(newWord);
+                            saved = 1;
+                            mvwprintw(menuWin, menuHeight - 1, 2, "[*] Word saved!");
+                            wrefresh(menuWin);
+                            napms(800);
+                            mvwprintw(menuWin, menuHeight - 1, 2, "                               ");
+                            wrefresh(menuWin);
+                        }
+                        break;
                     case 1: translateMode(option); break;
-                    case 2: menuPage(); break;
+                    case 2: menuPage(); break; // back to main menu
                 }
             } else if (strcmp(entry, "historyAction") == 0) {
                 switch (choice) {
@@ -102,7 +113,14 @@ void actions(char *entry, int option, Word *newWord) {
                     case 2: menuPage(); break;
                 }
             }
-            break;
+
+            // Only break loop if user chose "Back" or "Exit"
+            if ((strcmp(entry, "outputAction") == 0 && choice == 2) ||
+                (strcmp(entry, "historyAction") == 0 && choice == 2) ||
+                (strcmp(entry, "onlyMenuBack") == 0) ||
+                (strcmp(entry, "savedAction") == 0 && choice == 2)) {
+                break;
+            }
         }
     }
 

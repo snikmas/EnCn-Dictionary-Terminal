@@ -117,7 +117,7 @@ void translateMode(int mode) {
     
     wrefresh(resultWin);
 
-    actions("outputAction", 1);
+    actions("outputAction", mode);
 
     // Wait before exit
     getch();
