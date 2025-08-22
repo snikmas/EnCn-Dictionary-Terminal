@@ -112,8 +112,7 @@ void buildUrl(char *url, char *userInput, int option){
     }
 
     char *encodedInput = curl_easy_escape(curl, userInput, 0);
-    char *encodedSign = curl_easy_escape(curl, sign, 0);
-    if(!encodedInput || !encodedSign){
+    if(!encodedInput){
         free(salt);
         free(sign);
         free(curTime);
@@ -123,15 +122,13 @@ void buildUrl(char *url, char *userInput, int option){
     
     snprintf(url, 512, 
         "%s?q=%s&%s&appKey=%s&salt=%s&sign=%s&signType=v3&curtime=%s", 
-        startUrl, encodedInput, languagePref, API_KEY, salt, encodedSign, curTime);
+        startUrl, encodedInput, languagePref, API_KEY, salt, sign, curTime);
         
     
     
     free(salt);
     free(curTime);
-    free(sign);
     curl_free(encodedInput);
-    curl_free(encodedSign);
     curl_easy_cleanup(curl);
 }
 

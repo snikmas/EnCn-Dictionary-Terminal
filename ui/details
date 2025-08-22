@@ -1,8 +1,0 @@
-    // WINDOW *inputWin = newwin(3, menuWidth, menuStartY + menuHeight - 1, menuStartX);
-    // box(inputWin, 0, ' ');
-    // mvwprintw(inputWin,  1, 1, "Enter your command:");
-    // wrefresh(inputWin);
-    -> for unput
-
-
-    // FULL MODE READY

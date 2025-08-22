@@ -29,6 +29,7 @@ int menuPage() {
     noecho();           
     cbreak();          
     curs_set(0);       
+    clear();
 
     int xMax, yMax;
     getmaxyx(stdscr, yMax, xMax);

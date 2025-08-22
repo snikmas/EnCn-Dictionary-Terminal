@@ -6,6 +6,8 @@ size_t write_data(void *buffer, size_t size, size_t nmemb, void *userInput){
     struct data *tempData = (struct data *)userInput;
     char *ptr = realloc(tempData->response, tempData->size + realSize + 1);
 
+
+
     if(!tempData || !ptr) {
         handleErrors(ERR_OUT_OF_MEMORY, "write_data");
         return 0;

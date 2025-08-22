@@ -76,16 +76,13 @@ void translateMode(int mode) {
     if(!input || !newWord){ 
         handleErrors(ERR_OUT_OF_MEMORY, "translateMode");
     }
-    int len = strlen(input);
-    if(len > 0 && input[len - 1] == '\n') input[len - 1] = '\0';
-
+    
+    
+    wmove(inputWin, 1, strlen(prompt) + 2);
+    wgetnstr(inputWin, input, 99);
+    wrefresh(inputWin);
     
     makeRequest(mode, newWord, input);
-    
-
-    wmove(inputWin, 1, strlen(prompt) + 2);
-    wgetnstr(inputWin, input, sizeof(input) - 1);
-    wrefresh(inputWin);
 
     if (strlen(input) > 0) {
         mvwprintw(inputWin, 3, 2, "Processing translation...");
@@ -114,12 +111,15 @@ void translateMode(int mode) {
     // Show input and placeholder translation
     mvwprintw(resultWin, 1, 2, "Input: %s", input);
     if (mode == 0)
-        mvwprintw(resultWin, 2, 2, "Translation: %s", newWord->wordEn);
-    else
         mvwprintw(resultWin, 2, 2, "Translation: %s", newWord->wordCn);
+    else
+        mvwprintw(resultWin, 2, 2, "Translation: %s", newWord->wordEn);
     
     wrefresh(resultWin);
 
+    actions("outputAction", 1);
+
     // Wait before exit
     getch();
+
 }
