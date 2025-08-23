@@ -11,6 +11,28 @@ const char *page_titles[3] = {
     "History Log",
 };
 
+// actions menu 
+const char *action_menus[4] = {
+    {
+        "[*] Save the word",
+        "[1] Translate another word",
+        "[2] Back to main menu",
+    },
+    {
+        "[1] Delete an entry",
+        "[2] Clear all history",
+        "[0] Back to main menu",
+    }, 
+    {
+        "[1] Delete an entry",
+        "[2] Clear all saved words",
+        "[0] Back to main menu",
+    }, 
+    {
+        "[0] Back to main menu",
+    },
+};
+
 
 // MENU_PAGE
 
@@ -36,12 +58,12 @@ static char *menu_3[] = {
 };
 
 
-const char *const *menus[3] = {
+const char **menus[3] = {
     menu_1, menu_2, menu_3,
 };
 // ALL MASCOTS
 
-static char *mascot0[] = {
+static const char *mascot0[] = {
     "        (\\_._/)                        ",
     "        ( o o )   System Online.        ",
     "        /  V  \\   Dictionary Booting... ",
@@ -49,7 +71,7 @@ static char *mascot0[] = {
     "         ^^ ^^                          "
 };
 
-static char *mascot1[] = {
+static const char *mascot1[] = {
     "        (\\_._/)                        ",
     "        ( ^ ^ )      Welcome, Hacker.   ",
     "        /  V  \\      Terminal Ready.    ",
@@ -57,7 +79,7 @@ static char *mascot1[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot2[] = {
+static const char *mascot2[] = {
     "        (\\_._/)                        ",
     "        ( ^ ^ )                        ",
     "        /  V  \\                        ",
@@ -65,7 +87,7 @@ static char *mascot2[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot3[] = {
+static const char *mascot3[] = {
     "        (\\_._/)                        ",
     "        ( - - )                        ",
     "        /  z  \\                        ",
@@ -73,7 +95,7 @@ static char *mascot3[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot4[] = {
+static const char *mascot4[] = {
     "        (\\_._/)                        ",
     "        ( > < )                        ",
     "        /  V  \\                        ",
@@ -81,7 +103,7 @@ static char *mascot4[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot5[] = {
+static const char *mascot5[] = {
     "        (\\_._/)                        ",
     "        ( ^_^ )                        ",
     "        /  V  \\                        ",
@@ -89,7 +111,7 @@ static char *mascot5[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot6[] = {
+static const char *mascot6[] = {
     "        (\\_._/)                        ",
     "        ( o_o )                        ",
     "        /  O  \\                        ",
@@ -97,7 +119,7 @@ static char *mascot6[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot7[] = {
+static const char *mascot7[] = {
     "        (\\_._/)                        ",
     "        ( T T )                        ",
     "        /  ~  \\                        ",
@@ -105,7 +127,7 @@ static char *mascot7[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot8[] = {
+static const char *mascot8[] = {
     "        (\\_._/)                        ",
     "        ( ^o^ )                        ",
     "        /  V  \\                        ",
@@ -113,7 +135,7 @@ static char *mascot8[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot9[] = {
+static const char *mascot9[] = {
     "        (\\_._/)                        ",
     "        ( >_> )                        ",
     "        /  V  \\                        ",
@@ -121,7 +143,7 @@ static char *mascot9[] = {
     "        ^^   ^^                          "
 };
 
-static char *mascot10[] = {
+static const char *mascot10[] = {
     "        (\\_._/)                        ",
     "        ( -_- )                        ",
     "        /  V  \\                        ",
@@ -129,7 +151,7 @@ static char *mascot10[] = {
     "        ^^   ^^                          "
 };
 
-const char *const *mascots[NUM_MASCOTS] = {
+const char **mascots[NUM_MASCOTS] = {
     mascot0, mascot1, mascot2, mascot3, mascot4,
     mascot5, mascot6, mascot7, mascot8, mascot9,
     mascot10

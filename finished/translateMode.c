@@ -94,7 +94,9 @@ void translateMode(int mode) {
 
     wrefresh(resultWin);
 
-    actions("translateMode", mode, newWord);
+    int heightNext;
+
+    actions("translateMode", mode, newWord, loadH + loadY);
     getch();
 
     /* ---------------- Cleanup ---------------- */

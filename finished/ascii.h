@@ -6,14 +6,17 @@
 #define NUM_MASCOTS 1
 #define PROGRAM_WIDTH 60
 
-#include "main.h"
 #include "word.h"
+#include "main.h"
 #include <stddef.h>
 
-extern const char *const *menus[3];
-extern const char *const *action_menus[4];
-extern const char *const page_titles[3];
-extern const char *const *mascots[NUM_MASCOTS];
+void addSavedWord(Word newWord);
+void saved_operations(Word newWord, int mode);
+
+extern const char **menus[3];
+extern const char *action_menus[4];
+extern const char *page_titles[3];
+extern const char **mascots[NUM_MASCOTS];
 
 struct data {
     char *response;
