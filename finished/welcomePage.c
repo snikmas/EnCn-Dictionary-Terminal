@@ -13,13 +13,16 @@ void welcomePage() {
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
-    // Ширина окна ограничена и центрирована
     // int PROGRAM_WIDTH = (xMax < 60) ? xMax - 2 : 60;
     int startX = (xMax - PROGRAM_WIDTH) / 2;
 
     // 1. Title Window
     WINDOW *titleWin = newwin(3, PROGRAM_WIDTH, 2, startX);
+    if (!titleWin) return;
+    
+    // Draw box manually
     box(titleWin, 0, 0);
+    
     int titleX = (PROGRAM_WIDTH - (int)strlen(page_titles[0])) / 2;
     mvwprintw(titleWin, 1, titleX, "%s", page_titles[0]);
     wrefresh(titleWin);
@@ -27,6 +30,12 @@ void welcomePage() {
     // 2. Mascot Window
     int mascotHeight = LINES_MASCOT + 2;
     WINDOW *mascotWin = newwin(mascotHeight, PROGRAM_WIDTH, 6, startX);
+    if (!mascotWin) {
+        delwin(titleWin);
+        return;
+    }
+    
+    // Draw box manually
     box(mascotWin, 0, 0);
 
     // Вычисляем максимальную длину строки маскота для центрирования
@@ -46,7 +55,15 @@ void welcomePage() {
     // 3. Loading Window
     int loadingY = 6 + mascotHeight + 1;
     WINDOW *loadingWin = newwin(5, PROGRAM_WIDTH, loadingY, startX);
+    if (!loadingWin) {
+        delwin(titleWin);
+        delwin(mascotWin);
+        return;
+    }
+    
+    // Draw box manually
     box(loadingWin, 0, 0);
+    
     mvwprintw(loadingWin, 1, 2, "Loading...");
     wrefresh(loadingWin);
 

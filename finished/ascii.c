@@ -12,25 +12,38 @@ const char *page_titles[3] = {
 };
 
 // actions menu 
-const char *action_menus[4] = {
-    {
-        "[*] Save the word",
-        "[1] Translate another word",
-        "[2] Back to main menu",
-    },
-    {
-        "[1] Delete an entry",
-        "[2] Clear all history",
-        "[0] Back to main menu",
-    }, 
-    {
-        "[1] Delete an entry",
-        "[2] Clear all saved words",
-        "[0] Back to main menu",
-    }, 
-    {
-        "[0] Back to main menu",
-    },
+static const char *action_menu_translate[] = {
+    "[*] Save the word",
+    "[1] Translate another word",
+    "[2] Back to main menu",
+    NULL
+};
+
+static const char *action_menu_history[] = {
+    "[1] Delete an entry",
+    "[2] Clear all history",
+    "[0] Back to main menu",
+    NULL
+};
+
+static const char *action_menu_saved[] = {
+    "[1] Delete an entry",
+    "[2] Clear all saved words",
+    "[0] Back to main menu",
+    NULL
+};
+
+static const char *action_menu_back[] = {
+    "[0] Back to main menu",
+    NULL
+};
+
+// Master table of all action menus
+const char **action_menus[] = {
+    action_menu_translate,
+    action_menu_history,
+    action_menu_saved,
+    action_menu_back
 };
 
 

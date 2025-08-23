@@ -41,6 +41,9 @@ void makeRequest(int option, Word *newWord, char *userInput){
 
     char *url = malloc(512);
     struct data myData = {0};
+    myData.response = NULL;  // Initialize to NULL to prevent undefined behavior
+    myData.size = 0;
+    
     // 2.setup curl
     
     if(curl_global_init(CURL_GLOBAL_DEFAULT) != CURLE_OK){
@@ -63,18 +66,22 @@ void makeRequest(int option, Word *newWord, char *userInput){
 
         res = curl_easy_perform(curl);
         if(res != CURLE_OK) {
+            free(url);
+            free(myData.response);
+            curl_easy_cleanup(curl);
+            curl_global_cleanup();
             handleErrors(ERR_CURL_INIT_FAIL, "makeRequest");
         }
 
         parseResponse(myData.response, newWord, option);
         
         free(myData.response);
+        free(url);
         curl_easy_cleanup(curl);
         curl_global_cleanup();
 
     } else {
         free(url);
-        free(userInput);
         free(myData.response);
         handleErrors(ERR_CURL_INIT_FAIL, "makeRequest");
     }
