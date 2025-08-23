@@ -5,7 +5,10 @@
 
 const char *page_titles[3] = {
     "EN - CN Dictionary",
-    "CN - EN Dictionary",
+    "EN - CN Mode", // default[1]
+    "CN - EN Mode",
+    "Saved",
+    "History Log",
 };
 
 

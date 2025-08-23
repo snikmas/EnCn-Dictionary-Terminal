@@ -12,7 +12,13 @@ int main(void){
 
   int choice = menuPage();
 
-  printf("%i choice", choice);
+  switch(choice){
+    case 0: translateMode(0); break; // default: en->cn
+    case 1: translateMode(1); break; // default: cn->en
+    // case 2: viewSaved(); break; 
+    // case 3: viewHistory(); break; 
+    // case 4: endwin(); exit;
+  }
 
 
   endwin();

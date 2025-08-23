@@ -30,7 +30,7 @@ int menuPage(){
     wrefresh(titleWin);
 
     // 2. Mascot Window
-    int mascotWidth = 40; // ширина окна маскота
+    int mascotWidth = 40; // ширина окна маскот
     int mascotHeight = LINES_MASCOT + 2;
     WINDOW *mascotWin = newwin(mascotHeight, mascotWidth, 5, (xMax - mascotWidth) / 2);
     box(mascotWin, 0, 0);
