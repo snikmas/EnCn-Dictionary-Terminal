@@ -6,12 +6,25 @@
 #define NUM_MASCOTS 1
 #define PROGRAM_WIDTH 60
 
-// extern char *menu_1[];
-// extern char *menu_2[];
-// extern char *menu_3[];
+#include "main.h"
+#include "word.h"
+#include <stddef.h>
+
 extern const char *const *menus[3];
-extern const char *page_titles[3];
+extern const char *const *action_menus[4];
+extern const char *const page_titles[3];
 extern const char *const *mascots[NUM_MASCOTS];
+
+struct data {
+    char *response;
+    size_t size;
+};
+
+void makeRequest(int option, Word *newWord, char *userInput);
+size_t write_data(void *buffer, size_t size, size_t nmemb, void *userInput);
+
+
+
 
 
 #endif

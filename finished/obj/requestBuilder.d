@@ -1,4 +1,4 @@
-obj/translateMode.o: translateMode.c ascii.h main.h config.h errors.h \
+obj/requestBuilder.o: requestBuilder.c ascii.h main.h config.h errors.h \
  word.h cJSON/cJSON.h
 ascii.h:
 main.h:

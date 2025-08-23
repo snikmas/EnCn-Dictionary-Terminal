@@ -1,3 +1,8 @@
-obj/utils.o: utils.c ascii.h word.h
+obj/utils.o: utils.c ascii.h main.h config.h errors.h word.h \
+ cJSON/cJSON.h
 ascii.h:
+main.h:
+config.h:
+errors.h:
 word.h:
+cJSON/cJSON.h:

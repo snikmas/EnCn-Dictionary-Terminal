@@ -1,4 +1,12 @@
-#include "apiRequest.h"
+#include "main.h"
+
+#include "ascii.h"
+#include "errors.h"
+#include "word.h"
+#include <ncurses.h>
+#include <string.h>
+#include <stdio.h>
+#include <unistd.h>
 
 size_t write_data(void *buffer, size_t size, size_t nmemb, void *userInput){
     

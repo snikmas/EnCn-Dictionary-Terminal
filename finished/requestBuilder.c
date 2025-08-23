@@ -1,4 +1,18 @@
-#include "requestBuilder.h"
+#include "ascii.h"
+#include "main.h"
+
+char *buildTime(){
+    time_t curTime = time(0);
+    char *curTime_str = malloc(20);
+    if (!curTime_str){
+        handleErrors(ERR_OUT_OF_MEMORY, "buildTime");
+        return NULL;
+    }
+
+    snprintf(curTime_str, 20, "%lld", (long long)curTime);
+    return curTime_str;
+}
+
 
 char *buildUuid(){
    uuid_t binuuid;
@@ -133,14 +147,3 @@ void buildUrl(char *url, char *userInput, int option){
 }
 
 
-char *buildTime(){
-    time_t curTime = time(0);
-    char *curTime_str = malloc(20);
-    if (!curTime_str){
-        handleErrors(ERR_OUT_OF_MEMORY, "buildTime");
-        return NULL;
-    }
-
-    snprintf(curTime_str, 20, "%lld", (long long)curTime);
-    return curTime_str;
-}

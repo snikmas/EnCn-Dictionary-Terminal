@@ -1,5 +1,7 @@
 #include "errors.h"
-#include "parser.h"
+
+#include "main.h"
+#include "ascii.h"
 #include "cJSON.h"
 #include <stdio.h>
 #include <string.h>

@@ -4,11 +4,7 @@
 #include "ascii.h"
 #include "main.h"
 
-#include <ncurses.h>
-#include <string.h>
 
-#include "ascii.h"
-#include "main.h"
 
 int menuPage(){
     noecho();

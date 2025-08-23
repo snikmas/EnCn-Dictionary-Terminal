@@ -1,3 +1,4 @@
+#include "main.h"
 #include "errors.h"
 
 const Error error_list[] = {

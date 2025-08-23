@@ -1,4 +1,5 @@
 #include "ascii.h"
+#include "main.h"
 #include "errors.h"
 #include "word.h"
 #include <ncurses.h>
@@ -84,16 +85,16 @@ void translateMode(int mode) {
 
     WINDOW *resultWin = newwin(6, loadW, loadY + loadH + 2, startX);
     box(resultWin, 0, 0);
-    mvwprintw(resultWin, 1, 2, "Input: %s", input);
+    mvwprintw(resultWin, 2, 2, "Input: %s", input);
 
     if (mode == 0)
-        mvwprintw(resultWin, 2, 2, "Translation: %s", newWord->wordCn);
+        mvwprintw(resultWin, 3, 2, "Translation: %s", newWord->wordCn);
     else
-        mvwprintw(resultWin, 2, 2, "Translation: %s", newWord->wordEn);
+        mvwprintw(resultWin, 3, 2, "Translation: %s", newWord->wordEn);
 
     wrefresh(resultWin);
 
-    actions("translateMode", mode);
+    actions("translateMode", mode, newWord);
     getch();
 
     /* ---------------- Cleanup ---------------- */
