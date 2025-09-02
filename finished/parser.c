@@ -16,6 +16,7 @@ void parseResponse(char *response, Word *newWord, int option) {
         handleErrors(ERR_PARSER, "parseResponse response is empty");
         return;
     };
+
     cJSON *json = cJSON_Parse(response);
     if (!json) {
         handleErrors(ERR_PARSER, "parseResponse jso0");
