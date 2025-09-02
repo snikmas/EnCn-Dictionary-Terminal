@@ -18,8 +18,8 @@ typedef struct NodeWord {
 extern struct NodeWord *HEAD_HISTORY;
 extern struct NodeWord *TAIL_HISTORY;
 
-extern struct NodeWord *HEAD_SAVED;
-extern struct NodeWord *TAIL_SAVED;
+extern struct NodeWord *HEAD_FAV;
+extern struct NodeWord *TAIL_FAV;
 
 
 #endif

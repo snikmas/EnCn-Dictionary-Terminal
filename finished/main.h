@@ -37,7 +37,7 @@ void welcomePage(void);
 void addSavedWord(Word *newWord);
 void addToHistory(Word *newWord);
 void saved_operations(Word *newWord, char operation);
-void actions(char *source, int mode, Word *newWord, int height);
+int actions(char *source, int mode, Word *newWord, int height);
 void history_operations(Word *newWord, char operation);
 void viewSaved(void);
 void viewHistory(void);

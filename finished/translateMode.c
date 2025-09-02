@@ -33,7 +33,7 @@ void translateMode(int mode) {
     int titleWinH = 6; // Define the title window height
 
     /* ---------------- Mascot Window ---------------- */
-    WINDOW *mascotWin = newwin(LINES_MASCOT + 2, PROGRAM_WIDTH - 4, titleWinH, startX + 2);
+    WINDOW *mascotWin = newwin(LINES_MASCOT + 4, PROGRAM_WIDTH, titleWinH, startX);
     if (!mascotWin) {
         delwin(titleWin);
         return;
@@ -48,9 +48,9 @@ void translateMode(int mode) {
     wrefresh(mascotWin);
 
     /* ---------------- Input Window ---------------- */
-    int inputH = 7;
-    int inputY = titleWinH + LINES_MASCOT + 1;
-    WINDOW *inputWin = newwin(inputH, PROGRAM_WIDTH, inputY - 1, startX);
+    int inputH = 9;
+    int inputY = titleWinH + LINES_MASCOT + 3;
+    WINDOW *inputWin = newwin(inputH, PROGRAM_WIDTH, inputY + 2, startX);
     if (!inputWin) {    
         delwin(titleWin);
         delwin(mascotWin);
@@ -74,14 +74,9 @@ void translateMode(int mode) {
         newWord->wordCn = NULL;
         newWord->isFavorite = false;
     }
-    
-    if (!input || !newWord) {
-        if (input) free(input);
-        if (newWord) free(newWord);
-        delwin(titleWin);
-        delwin(mascotWin);
-        delwin(inputWin);
-        handleErrors(ERR_OUT_OF_MEMORY, "translateMode");
+
+    while (!input || !newWord) {
+        mvwprintw(inputWin, 1, 2, "Input the world!\n");
     }
 
     wmove(inputWin, 1, (int)strlen(prompt) + 2);
@@ -124,12 +119,14 @@ void translateMode(int mode) {
     }
     
     wclear(loadWin);
+    wrefresh(loadWin); // added
     delwin(loadWin);
     usleep(100000);
+    refresh();
 
     /* ---------------- Result Window ---------------- */
 
-    WINDOW *resultWin = newwin(4, PROGRAM_WIDTH, loadY + 2, startX);  // Reduced height from 6 to 4
+    WINDOW *resultWin = newwin(9, PROGRAM_WIDTH, loadY - 2, startX);  // Reduced height from 6 to 4
     
     if (!resultWin) {
         // Handle window creation failure
@@ -140,13 +137,13 @@ void translateMode(int mode) {
     }
     box(resultWin, 0, 0);
     
-    mvwprintw(resultWin, 1, 2, "Input: %s", input);
+    mvwprintw(resultWin, 3, 2, "Input: %s", input);
 
     if (mode == 0) {
         if (newWord->wordCn && strlen(newWord->wordCn) > 0) {
-            mvwprintw(resultWin, 2, 2, "Translation: %s", newWord->wordCn);
+            mvwprintw(resultWin, 4, 2, "Translation: %s", newWord->wordCn);
         } else {
-            mvwprintw(resultWin, 2, 2, "Translation: Translation failed");
+            mvwprintw(resultWin, 7, 2, "Translation: Translation failed");
         }
     } else {
         if (newWord->wordEn && strlen(newWord->wordEn) > 0) {

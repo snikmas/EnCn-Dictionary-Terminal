@@ -4,3 +4,4 @@ config.c
 config.h
 *.o
 cJSON
+/finished/bin/

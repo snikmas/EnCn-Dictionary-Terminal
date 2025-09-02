@@ -2,7 +2,7 @@
 #include "word.h"
 #include "main.h"
 
-void actions(char *source, int mode, Word *newWord, int height) {
+int actions(char *source, int mode, Word *newWord, int height) {
     noecho();
     cbreak();
     curs_set(0);
@@ -120,6 +120,7 @@ void actions(char *source, int mode, Word *newWord, int height) {
         } else if (ch == KEY_DOWN) {
             choice = (choice + 1) % cur_len;
         } else if (ch == '\n' || ch == '\r' || ch == ' ') {
+            flushinp(); // clear the buffer
             // ENTER, RETURN, or SPACE pressed → execute action
             if (strcmp(source, "translateMode") == 0) {
                 switch (choice) {
@@ -134,15 +135,13 @@ void actions(char *source, int mode, Word *newWord, int height) {
                             wrefresh(actionsMenuWin);
                         }
                         // Continue showing the menu
-                        break;
+                        continue; 
                     case 1: 
-                        delwin(actionsMenuWin);
-                        translateMode(mode); 
-                        return; // Return after translation
+                    delwin(actionsMenuWin); 
+                    return 1; // translate again
                     case 2: 
                         delwin(actionsMenuWin);
-                        menuPage(); 
-                        return; // Return to main menu
+                        return 2; // Return to main menu
                 }
             } else if (strcmp(source, "historyAction") == 0) {
                 switch (choice) {

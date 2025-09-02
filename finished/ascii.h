@@ -15,7 +15,7 @@ void saved_operations(Word *newWord, char operation);
 
 extern const char **menus[3];
 extern const char **action_menus[4];
-extern const char *page_titles[3];
+extern const char *page_titles[5];
 extern const char **mascots[NUM_MASCOTS];
 
 struct data {

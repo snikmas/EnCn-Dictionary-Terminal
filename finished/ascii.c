@@ -3,7 +3,7 @@
 
 // CONTENT: titles, menus, mascots
 
-const char *page_titles[3] = {
+const char *page_titles[5] = {
     "EN - CN Dictionary",
     "EN - CN Mode", // default[1]
     "CN - EN Mode",

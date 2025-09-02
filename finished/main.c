@@ -8,13 +8,14 @@ int main(void){
   curs_set(0);
   refresh();
 
-  welcomePage(); // completed.
+  // during this debugging, no need
+  // welcomePage(); // completed.
 
   
   int running = 1;
   while(running){
 
-    
+    flushinp();
     int choice = menuPage();
     
     switch(choice){
