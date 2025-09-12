@@ -144,15 +144,14 @@ void translateMode(int mode) {
 
 
          // clean the line
-        // очистка строки ввода
         wmove(inputWin, 1, (int)strlen(prompt) + 2);
         wclrtoeol(inputWin);
         wrefresh(inputWin);
 
-        // очистка буфера input
+        // clear buffer input
         memset(input, 0, 100);
 
-        // новый ввод
+        // new input
         wgetnstr(inputWin, input, 99);
     }
 
