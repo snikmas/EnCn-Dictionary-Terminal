@@ -1,6 +1,6 @@
-#include "ascii.h"
-#include "word.h"
-#include "main.h"
+#include "headers/ascii.h"
+#include "headers/word.h"
+#include "headers/main.h"
 
 int actions(char *source, int mode, Word *newWord, int height) {
     noecho();
@@ -10,7 +10,7 @@ int actions(char *source, int mode, Word *newWord, int height) {
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
     
-    // Better positioning logic
+    // positioning logic
     int actionsMenuY;
     if (height > 0 && height + 8 < yMax) {
         actionsMenuY = height + 2;
@@ -61,13 +61,6 @@ int actions(char *source, int mode, Word *newWord, int height) {
     // Draw box manually to ensure proper display
     box(actionsMenuWin, 0, 0);
     
-    // Draw horizontal lines
-    mvwhline(actionsMenuWin, 0, 1, ACS_HLINE, actionsMenuW-2);  // Top line
-    mvwhline(actionsMenuWin, actionsMenuH-1, 1, ACS_HLINE, actionsMenuW-2); // Bottom line
-    
-    // Draw vertical lines
-    mvwvline(actionsMenuWin, 1, 0, ACS_VLINE, actionsMenuH-2); // Left line
-    mvwvline(actionsMenuWin, 1, actionsMenuW-1, ACS_VLINE, actionsMenuH-2); // Right line
     
     keypad(actionsMenuWin, TRUE);
     wrefresh(actionsMenuWin);

@@ -20,32 +20,45 @@ Supports **bidirectional translation**:
 - `curl` – for sending HTTP requests  
 - `openssl` – for secure requests (e.g., API signing)  
 - `uuid` – for generating unique request IDs  
-- `regex` – (optional) for parsing HTML responses  
 
 ---
 
-## 📅 Status (as of 2025-08-14)
-✅ Menu navigation implemented  
-✅ Can get words and translate  
-🔄 More UI features coming soon  
+## 📅 Status (as of 2025-09-13)
+✅ Basic operations ready
+✅ Search functionality for English/Chinese words
+✅ Terminal UI via ncurses
+✅ Makefile for easy compilation
 
 ---
 
 ## 📋 To-Do (Requirements)
 - [x] Search for English or Chinese words  
-- [ ] UI via **ncurses**  
+- [X] UI via **ncurses**  
 - [ ] Error animations  
 - [ ] Expand menu and features  
 - [ ] Handle words >20 symbols or containing spaces  
-- [ ] Parse HTML response cleanly  
+- [X] Parse HTML response cleanly  
 - [x] Create `Makefile`  
 - [x] Organize folder structure  
 
 ---
 
-## 🧪 To-Do (Tests)
-- [ ] Write automated tests  
-- [ ] Test special cases (e.g., punctuation, slang, traditional vs simplified)  
-- [ ] Define behavior when **no internet connection** is detected  
+## Instalation
 
----
+Clone the repository and compile using Makefile
+```
+# Clone repo
+git clone https://github.com/your-username/terminal-dict.git
+cd terminal-dict
+
+# Compile
+make
+
+# Run the program
+bin/main
+```
+
+### Requirements: 
+- Linux or WSL environment
+- C compiler (gcc)
+- Dependencies: curl, openssl, uuid, ncurses, cJSON

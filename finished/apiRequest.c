@@ -1,8 +1,7 @@
-#include "main.h"
-
-#include "ascii.h"
-#include "errors.h"
-#include "word.h"
+#include "headers/main.h"
+#include "headers/ascii.h"
+#include "headers/errors.h"
+#include "headers/word.h"
 #include <ncurses.h>
 #include <string.h>
 #include <stdio.h>

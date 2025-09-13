@@ -1,8 +1,6 @@
-#include "errors.h"
-
-#include "main.h"
-#include "ascii.h"
-#include "cJSON.h"
+#include "headers/errors.h"
+#include "headers/main.h"
+#include "headers/ascii.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

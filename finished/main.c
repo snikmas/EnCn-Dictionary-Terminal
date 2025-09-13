@@ -1,4 +1,4 @@
-#include "main.h"
+#include "headers/main.h"
 
 int main(void){
 
@@ -8,10 +8,8 @@ int main(void){
   curs_set(0);
   refresh();
 
-  // during this debugging, no need
-  // welcomePage(); // completed.
+  welcomePage(); 
 
-  
   int running = 1;
   while(running){
 
@@ -19,8 +17,8 @@ int main(void){
     int choice = menuPage();
     
     switch(choice){
-      case 0: translateMode(0); break; // default: en->cn
-      case 1: translateMode(1); break; // default: cn->en
+      case 0: translateMode(0); break; // default, 0: en->cn
+      case 1: translateMode(1); break; // mode 1: cn->en
       case 2: viewSaved(); break; 
       case 3: viewHistory(); break; 
       case 4: running = 0; break; // Exit program

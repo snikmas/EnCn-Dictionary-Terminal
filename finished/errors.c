@@ -1,5 +1,5 @@
-#include "main.h"
-#include "errors.h"
+#include "headers/main.h"
+#include "headers/errors.h"
 
 const Error error_list[] = {
   { ERR_OK, "No error"},

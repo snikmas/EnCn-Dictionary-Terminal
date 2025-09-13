@@ -1,6 +1,6 @@
-#include "word.h"
-#include "ascii.h"
-#include "main.h"
+#include "headers/word.h"
+#include "headers/ascii.h"
+#include "headers/main.h"
 
 // Global variable definitions
 struct NodeWord *HEAD_HISTORY = NULL;

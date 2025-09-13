@@ -1,7 +1,7 @@
-#include "ascii.h"
-#include "main.h"
-#include "errors.h"
-#include "word.h"
+#include "headers/ascii.h"
+#include "headers/main.h"
+#include "headers/errors.h"
+#include "headers/word.h"
 #include <ctype.h>
 #include <ncurses.h>
 #include <string.h>
@@ -34,7 +34,6 @@ void translateMode(int mode) {
     WINDOW *titleWin = newwin(6, PROGRAM_WIDTH, 0, startX);
     if (!titleWin) return;
     
-    // Draw box manually
     box(titleWin, 0, 0);
     
     mvwprintw(titleWin, 2, (PROGRAM_WIDTH - (int)strlen(page_titles[0])) / 2, "%s", page_titles[0]);
@@ -103,19 +102,18 @@ void translateMode(int mode) {
         mvwprintw(inputWin, 3, 2, "                                                      ");
 
         // clean the line
-        // очистка строки ввода
         wmove(inputWin, 1, (int)strlen(prompt) + 2);
         wclrtoeol(inputWin);
         wrefresh(inputWin);
 
-        // очистка буфера input
+        // clean buffer input
         memset(input, 0, 100);
 
-        // новый ввод
+        // get new input
         wgetnstr(inputWin, input, 99);
     }
 
-    // В режиме CN -> EN
+    // CN->EN mode
     while (((unsigned char)input[0] < 128 && isalpha((unsigned char)input[0])) && mode == 1) {
         mvwprintw(inputWin, 3, 2, "You are in the Cn -> En mode! Please, use Chinese!");
         wrefresh(inputWin);
@@ -129,10 +127,10 @@ void translateMode(int mode) {
         wclrtoeol(inputWin);
         wrefresh(inputWin);
 
-        // очистка буфера input
+        // clean input
         memset(input, 0, 100);
 
-        // новый ввод
+        // get new
         wgetnstr(inputWin, input, 99);
     }
 

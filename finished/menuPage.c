@@ -1,8 +1,8 @@
 #include <ncurses.h>
 #include <string.h>
 
-#include "ascii.h"
-#include "main.h"
+#include "headers/ascii.h"
+#include "headers/main.h"
 
 
 
