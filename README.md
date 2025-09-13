@@ -8,61 +8,84 @@ Supports **bidirectional translation**:
 ---
 
 ## 🚀 Features
-- Search English words for Chinese translations
-- Search Chinese words for English translations
+- Translate English words into Chinese
+- Translate Chinese words into English
 - Runs entirely in the terminal
-- Check history / favorites
+- View and manage history / favorites
 - Lightweight dependencies
 
 ---
 
 ## 🛠 Dependencies
-- `curl` – for sending HTTP requests  
-- `openssl` – for secure requests (e.g., API signing)  
-- `uuid` – for generating unique request IDs  
 
+This project requires the following:
+
+- `gcc` (C compiler)
+- `make`
+- `curl` (`libcurl4-openssl-dev`)
+- `openssl` (`libssl-dev`)
+- `uuid` (`uuid-dev`)
+- `ncurses` (`libncurses5-dev`, `libncursesw5-dev`)
+
+On Ubuntu/WSL, install them with:
+
+```bash
+sudo apt update
+sudo apt install build-essential \
+                 libcurl4-openssl-dev \
+                 libssl-dev \
+                 uuid-dev \
+                 libncurses5-dev \
+                 libncursesw5-dev
+```
 ---
 
 ## 📅 Status (as of 2025-09-13)
-✅ Basic operations ready
-✅ Search functionality for English/Chinese words
-✅ Terminal UI via ncurses
-✅ Makefile for easy compilation
 
----
+- [X] Basic operations ready
+- [X] Search functionality for English/Chinese words
+- [X] Terminal UI via ncurses
+- [X] Makefile for easy compilation
 
-## 📋 To-Do (Requirements)
-- [x] Search for English or Chinese words  
-- [X] UI via **ncurses**  
-- [ ] Error animations  
-- [ ] Expand menu and features  
-- [ ] Handle words >20 symbols or containing spaces  
-- [X] Parse HTML response cleanly  
-- [x] Create `Makefile`  
-- [x] Organize folder structure  
+## 📋 To-Do (Planned Features)
 
----
+- [X] Search for English or Chinese words
+- [X] UI via ncurses
+- [ ] Error animations
+- [X] Expand menu and features
+- [ ] Handle long words (>20 symbols) or words with spaces
+- [X] Parse API response cleanly (via cJSON)
+- [X] Create Makefile
+- [X] Organize folder structure
 
-## Instalation
+## 💾 Installation
 
-Clone the repository and compile using Makefile
-```
+Clone the repository and compile using the provided Makefile:
+
 # Clone repo
+```
 git clone https://github.com/snikmas/encn-dict-terminal.git
-
-# Enter project folder
 cd encn-dict-terminal
 
 # Compile
 make
 
 # Run the program
-bin/main
+./bin/main
+
+```
+## 📖 Usage
+
+1. Launch the program:
+```
+./bin/main
 ```
 
-### Requirements: 
-- Linux or WSL environment
-- C compiler (gcc)
-- Dependencies: curl, openssl, uuid, ncurses, cJSON
+2. Navigate the menu:
 
+- Translate CN→EN or EN→CN
+- View saved words
+- View translation history
+= Exit
 
+3. Use on-screen prompts to input words, save translations, or manage history.
