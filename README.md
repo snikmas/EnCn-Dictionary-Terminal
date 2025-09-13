@@ -48,8 +48,8 @@ Supports **bidirectional translation**:
 Clone the repository and compile using Makefile
 ```
 # Clone repo
-git clone https://github.com/your-username/terminal-dict.git
-cd terminal-dict
+git clone https://github.com/snikmas/EnCn-Dictionary-Terminal.git
+cd EnCn-Dictionary-Terminal
 
 # Compile
 make
