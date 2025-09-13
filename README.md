@@ -48,7 +48,7 @@ Supports **bidirectional translation**:
 Clone the repository and compile using Makefile
 ```
 # Clone repo
-git clone https://github.com/snikmas/EnCn-Dictionary-Terminal.git
+git clone [https://github.com/snikmas/EnCn-Dictionary-Terminal.git](https://github.com/snikmas/encn-dict-terminal.git)
 cd EnCn-Dictionary-Terminal
 
 # Compile
@@ -62,3 +62,4 @@ bin/main
 - Linux or WSL environment
 - C compiler (gcc)
 - Dependencies: curl, openssl, uuid, ncurses, cJSON
+
